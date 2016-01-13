@@ -44,21 +44,21 @@ class Event
     /**
      * @var string
      *
-     * @ORM\Column(name="token", type="string", length=255)
+     * @ORM\Column(name="token", type="string", length=255, nullable=true)
      */
     private $token;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_distributed", type="boolean")
+     * @ORM\Column(name="is_distributed", type="boolean", nullable=true)
      */
     private $isDistributed;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="shared_token", type="string", length=255)
+     * @ORM\Column(name="shared_token", type="string", length=255, nullable=true)
      */
     private $sharedToken;
 

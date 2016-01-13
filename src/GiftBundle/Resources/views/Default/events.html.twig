@@ -7,7 +7,10 @@
     <a href="{{ path('fos_user_security_logout') }}">Logout</a>
     <p>
     {% for event in events %}
-        <li>{{ event.event.name }}</li>
+        <li>Nom de l'événement : {{ event.event.name }}</li>
+        <li>Date de début de l'événement : {{ event.event.startdate|date('d-m-Y H:i:s') }}</li>
+        <li>Participants : {{ event.user.username }}</li>
     {% endfor %}
     </p>
+    <a href="{{ path('gift_default_addevent') }}">Ajouter un événement</a>
 {% endblock %}

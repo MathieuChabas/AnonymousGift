@@ -19,7 +19,7 @@ class UserEventRepository extends \Doctrine\ORM\EntityRepository
             ->from('GiftBundle\Entity\UserEvent', 'ue')
             ->leftJoin('ue.event','e')
             ->andWhere('ue.user = :user')
-            ->andWhere($qb->expr()->lt('e.startdate', ':now'))
+            ->andWhere('e.startdate > :now')
             ->setParameters(array(
                 'now' => new \DateTime(),
                 'user' => $user))

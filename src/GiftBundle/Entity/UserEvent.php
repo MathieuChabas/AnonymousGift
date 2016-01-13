@@ -34,7 +34,7 @@ class UserEvent
     /**
      * @var string
      *
-     * @ORM\Column(name="received_user", type="string", length=255)
+     * @ORM\Column(name="received_user", type="string", length=255, nullable=true)
      */
     private $receivedUser;
 
