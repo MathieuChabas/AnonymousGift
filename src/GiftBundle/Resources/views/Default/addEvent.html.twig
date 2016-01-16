@@ -1,10 +1,17 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+<div class="container-fluid">
     <h1>Création d'un événement</h1>
 
-    <a href="{{ path('homepage') }}">HomePage</a><br>
-    <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+    <a class="btn btn-default" href="{{ path('homepage') }}">HomePage</a>
+    <a class="btn btn-default"  href="{{ path('fos_user_security_logout') }}">Logout</a><br><br/>
 
+    <div class="row">
+        <div class="col-md-6">
+        {{ form(form) }}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -2,8 +2,12 @@
 
 namespace GiftBundle\Controller;
 
+use GiftBundle\Entity\Event;
+use GiftBundle\Entity\UserEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use GiftBundle\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -35,10 +39,29 @@ class DefaultController extends Controller
     /**
      * @Route("/add-event")
      */
-    public function addEvent(){
+    public function addEvent(Request $request){
+
+        $event = new Event();
+        $userEvent = new UserEvent();
+
+        $form = $this->get('form.factory')->create(new Form\CreateEventType($this->get('security.context'),$this->getDoctrine()->getManager()), $event);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $this->getUser();
+            $userEvent = new UserEvent();
+            $userEvent->setEvent($event);
+            $userEvent->setUser($user);
+
+            $event->setOwner($user);
+            $em->persist($event);
+            $em->persist($userEvent);
+            $em->flush();
+        }
 
         return $this->render('GiftBundle:Default:addEvent.html.twig', array(
-
+            'form' => $form->createView()
         ));
     }
 }

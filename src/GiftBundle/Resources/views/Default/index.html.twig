@@ -1,9 +1,10 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+<div class="container-fluid">
     <h1>Anonymous Gift</h1>
 
-    <a href="{{ path('fos_user_security_login') }}">Login</a><br>
-    <a href="{{ path('fos_user_registration_register') }}">Register</a>
-    <p></p>
+    <a class="btn btn-default" href="{{ path('fos_user_security_login') }}">Login</a><br><br>
+    <a class="btn btn-default" href="{{ path('fos_user_registration_register') }}">Register</a>
+</div>
 {% endblock %}

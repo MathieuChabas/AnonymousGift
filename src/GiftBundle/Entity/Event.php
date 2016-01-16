@@ -216,5 +216,12 @@ class Event
     {
         return $this->sharedToken;
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist(){
+
+    }
 }
 
