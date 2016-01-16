@@ -44,7 +44,7 @@ class DefaultController extends Controller
         $event = new Event();
         $userEvent = new UserEvent();
 
-        $form = $this->get('form.factory')->create(new Form\CreateEventType($this->get('security.context'),$this->getDoctrine()->getManager()), $event);
+        $form = $this->get('form.factory')->create(new Form\CreateEventType(), $event);
 
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
