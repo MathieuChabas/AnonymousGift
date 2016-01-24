@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1>{{ event.name }}</h1>
+
+    <div class="login">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <span class="label label-default">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span><br>
+            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary btn-raised">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+            <a class="btn btn-primary btn-raised" href="{{ path('homepage') }}">HomePage</a>
+            <a class="btn btn-primary btn-raised" href="{{ path('gift_default_events') }}">List Events</a>
+        {% else %}
+            <a class="btn btn-primary btn-raised" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
+    </div>
+
+    <h2>Ajouter un participant</h2>
+
+    <p>Votre évènement a bien été créé. Partager le lien suivant auprès de vos amis pour les inviter à vous rejoindre.</p>
+    <p><a href="{{ url('gift_default_registernewparticipant', {'shared_token' : event.sharedToken}, true)}}">{{ url('gift_default_registernewparticipant', {'shared_token' : event.sharedToken}, true)}}</a></p>
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_start(form, {'attr' : {'class' : 'add_participant', 'action' : path('gift_default_addparticipant', {'id' : event.id})}}) }}
+            <div class="form-group label-floating">
+                {{ form_errors(form.adresseEmail) }}
+                {{ form_label(form.adresseEmail, null, {'label_attr':{'class': 'control-label'}}) }}
+                {{ form_widget(form.adresseEmail, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="form-group label-floating">
+                {{ form_errors(form.message) }}
+                {{ form_label(form.message, null, {'label_attr':{'class': 'control-label'}}) }}
+                {{ form_widget(form.message, { 'attr': {'class': 'form-control'}, 'value':  'Votre ami ' ~ user.firstname ~ ' ' ~ user.lastname ~ ', vous invite à le rejoindre sur anonymous-gift.local en cliquant sur le lien suivant : ' ~ url('gift_default_registernewparticipant', {'shared_token' : event.sharedToken}, true) }) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+    {% if succes %}
+        <p>Un message a bien été envoyé à {{ user.email }}</p>
+    {% endif %}
+</div>
+
+{% endblock %}

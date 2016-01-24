@@ -5,7 +5,8 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             {% stylesheets
-            '%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
+            '%kernel.root_dir%/../web/assets/vendor/bootstrap/dist/css/bootstrap.min.css'
+            '%kernel.root_dir%/../web/assets/vendor/bootstrap-material-design/dist/css/bootstrap-material-design.min.css'
             '%kernel.root_dir%/../web/bundles/framework/css/main.css'
             %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -15,6 +16,19 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        {% block javascripts %}
+            {% javascripts
+            '%kernel.root_dir%/../vendor/components/jquery/jquery.min.js'
+            '%kernel.root_dir%/../web/assets/vendor/bootstrap-material-design/dist/js/material.min.js'
+            %}
+            <script src="{{ asset_url }}" type="text/javascript"></script>
+            <script>
+                $(function(){
+                    $.material.init();
+                });
+            </script>
+            {% endjavascripts %}
+        {% endblock %}
     </body>
 </html>

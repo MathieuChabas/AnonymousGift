@@ -27,9 +27,10 @@ class CreateEventType extends AbstractType
             ->add('name','text',array('label' => 'Nom de l\'événement',
                                        'attr' => array('class' => 'form-control')))
             ->add('save', 'submit', array('label' => 'Créer',
-                                            'attr' => array('class' => 'btn btn-default'),));
+                                            'attr' => array('class' => 'btn btn-default btn-raised'),));
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $formEvent) {
+
         });
     }
 

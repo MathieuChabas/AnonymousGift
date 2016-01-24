@@ -4,12 +4,24 @@
 <div class="container-fluid">
     <h1>Création d'un événement</h1>
 
-    <a class="btn btn-default" href="{{ path('homepage') }}">HomePage</a>
-    <a class="btn btn-default"  href="{{ path('fos_user_security_logout') }}">Logout</a><br><br/>
+    <a class="btn btn-primary btn-raised" href="{{ path('homepage') }}">HomePage</a>
+    <a class="btn btn-primary btn-raised" href="{{ path('gift_default_events') }}">List Events</a>
+    <a class="btn btn-primary btn-raised"  href="{{ path('fos_user_security_logout') }}">Logout</a><br><br/>
 
     <div class="row">
         <div class="col-md-6">
-        {{ form(form) }}
+            {{ form_start(form) }}
+                <div class="form-group label-floating">
+                    {{ form_errors(form.startdate) }}
+                    {{ form_label(form.startdate, null, {'label_attr':{'class': 'control-label'}}) }}
+                    {{ form_widget(form.startdate, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            <div class="form-group label-floating">
+                {{ form_errors(form.name) }}
+                {{ form_label(form.name, null, {'label_attr':{'class': 'control-label'}}) }}
+                {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            {{ form_end(form) }}
         </div>
     </div>
 </div>

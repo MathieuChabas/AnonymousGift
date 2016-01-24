@@ -28,4 +28,20 @@ class UserEventRepository extends \Doctrine\ORM\EntityRepository
 
         return $events;
     }
+
+    public function getUsersByEvent($event){
+
+        $qb = $this->_em->createQueryBuilder();
+        $users = $qb
+            ->select('ue')
+            ->from('GiftBundle\Entity\UserEvent', 'ue')
+            ->leftJoin('ue.user','u')
+            ->andWhere('ue.event = :event')
+            ->setParameters(array(
+                'event' => $event))
+            ->getQuery()
+            ->getResult();
+
+        return $users;
+    }
 }

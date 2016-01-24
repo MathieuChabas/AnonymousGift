@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="GiftBundle\Repository\EventRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Event
 {
@@ -221,7 +222,8 @@ class Event
      * @ORM\PrePersist
      */
     public function prePersist(){
-
+        $this->token = md5(time().rand(0,999999));
+        $this->sharedToken = md5(time().rand(0,999999));
     }
 }
 

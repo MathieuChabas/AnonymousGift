@@ -4,7 +4,8 @@
         <meta charset="UTF-8" />
         {% block stylesheets %}
             {% stylesheets
-            '%kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.min.css'
+            '%kernel.root_dir%/../web/assets/vendor/bootstrap/dist/css/bootstrap.min.css'
+            '%kernel.root_dir%/../web/assets/vendor/bootstrap-material-design/dist/css/bootstrap-material-design.min.css'
             '%kernel.root_dir%/../web/bundles/framework/css/main.css'
             %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -12,16 +13,16 @@
         {% endblock %}
     </head>
     <body>
-        <div>
+        <div class="login">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default">
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} <br><br>
+                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary btn-raised">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                 </a>
             {% else %}
-                <a class="btn btn-default" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                <a class="btn btn-primary btn-raised" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
             {% endif %}
-            <a href="{{ path('homepage') }}" class="btn btn-default">HomePage</a>
+            <a href="{{ path('homepage') }}" class="btn btn-primary btn-raised">HomePage</a>
         </div>
 
         {% if app.request.hasPreviousSession %}
@@ -38,5 +39,18 @@
             {% block fos_user_content %}
             {% endblock fos_user_content %}
         </div>
+        {% block javascripts %}
+            {% javascripts
+            '%kernel.root_dir%/../vendor/components/jquery/jquery.min.js'
+            '%kernel.root_dir%/../web/assets/vendor/bootstrap-material-design/dist/js/material.min.js'
+            %}
+            <script src="{{ asset_url }}" type="text/javascript"></script>
+            <script>
+                $(function(){
+                    $.material.init();
+                });
+            </script>
+            {% endjavascripts %}
+        {% endblock %}
     </body>
 </html>

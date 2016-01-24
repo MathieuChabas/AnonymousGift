@@ -18,9 +18,8 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "twitter/bootstrap": "3.*",
         "components/jquery": "1.11.1",
-        "symfony/assetic-bundle": "^2.7",
+        "symfony/assetic-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "^1.2"
     },
     "require-dev": {

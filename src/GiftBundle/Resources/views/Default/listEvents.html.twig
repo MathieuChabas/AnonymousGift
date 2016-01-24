@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1>Liste de vos évènements</h1>
+
+    <div class="login">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <span class="label label-default">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span><br>
+            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary btn-raised">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+            <a class="btn btn-primary btn-raised" href="{{ path('homepage') }}">HomePage</a><br><br>
+        {% else %}
+            <a class="btn btn-primary btn-raised" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
+    </div>
+
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Nom de l'événement</th>
+            <th>Date de début</th>
+        </tr>
+        {% for event in events %}
+            <tr>
+                <td><a href="{{ path('gift_default_singleevent', {'eventId':event.event.id} ) }}">{{ event.event.name }}</a></td>
+                <td> {{ event.event.startdate|date('d-m-Y H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a class="btn btn-default btn-raised" href="{{ path('gift_default_addevent') }}">Ajouter un événement</a>
+</div>
+
+{% endblock %}
