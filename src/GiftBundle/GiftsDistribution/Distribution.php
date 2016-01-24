@@ -11,7 +11,6 @@ namespace GiftBundle\GiftsDistribution;
 class Distribution
 {
     private $listUsers;
-    private $logger;
 
     /**
      * Distribution constructor.
@@ -37,7 +36,8 @@ class Distribution
             if($i != (sizeof($this->listUsers) - 1)) {
                 $noRepeat = false;
                 while (!$noRepeat) {
-                    $randIndex = rand(1, sizeof($this->listUsers)-1);
+                    $size = sizeof($this->listUsers);
+                    $randIndex = rand(1, $size-1);
                     if (!in_array($randIndex, $alreadyChosen)) {
                         $noRepeat = true;
                         $alreadyChosen[] = $randIndex;
@@ -53,3 +53,4 @@ class Distribution
 
 
 }
+

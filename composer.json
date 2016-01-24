@@ -19,7 +19,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "components/jquery": "1.11.1",
-        "symfony/assetic-bundle": "dev-master",
+        "symfony/assetic-bundle": "2.7.*",
         "stof/doctrine-extensions-bundle": "^1.2"
     },
     "require-dev": {
