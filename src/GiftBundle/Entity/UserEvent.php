@@ -32,9 +32,8 @@ class UserEvent
     private $event;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="received_user", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="User")
      */
     private $receivedUser;
 
@@ -98,27 +97,21 @@ class UserEvent
     }
 
     /**
-     * Set receivedUser
-     *
-     * @param string $receivedUser
-     *
-     * @return UserEvent
-     */
-    public function setReceivedUser($receivedUser)
-    {
-        $this->receivedUser = $receivedUser;
-
-        return $this;
-    }
-
-    /**
-     * Get receivedUser
-     *
-     * @return string
+     * @return mixed
      */
     public function getReceivedUser()
     {
         return $this->receivedUser;
     }
+
+    /**
+     * @param mixed $receivedUser
+     */
+    public function setReceivedUser($receivedUser)
+    {
+        $this->receivedUser = $receivedUser;
+    }
+
+
 }
 

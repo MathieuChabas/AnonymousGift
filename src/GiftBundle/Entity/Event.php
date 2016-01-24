@@ -177,7 +177,7 @@ class Event
      *
      * @return Event
      */
-    public function setIsDistributed($isDistributed)
+    public function setDistributed($isDistributed)
     {
         $this->isDistributed = $isDistributed;
 
@@ -189,7 +189,7 @@ class Event
      *
      * @return bool
      */
-    public function getIsDistributed()
+    public function isDistributed()
     {
         return $this->isDistributed;
     }

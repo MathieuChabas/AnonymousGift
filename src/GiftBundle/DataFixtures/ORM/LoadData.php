@@ -65,6 +65,43 @@ class LoadUserData implements FixtureInterface
         $manager->persist($event);
         $manager->persist($userEvent);
 
+
+        $visitor = new User();
+        $visitor->setUsername('visitor2');
+        $visitor->setPlainPassword('visitor2');
+        $visitor->setEmail('mathieu2.chabas@outlook.com');
+        $visitor->setFirstname('Dupont2');
+        $visitor->setLastname('Dupont2');
+        $visitor->setEnabled(true);
+        $manager->persist($visitor);
+
+        $visitor = new User();
+        $visitor->setUsername('visitor3');
+        $visitor->setPlainPassword('visitor3');
+        $visitor->setEmail('mathieu3.chabas@outlook.com');
+        $visitor->setFirstname('Dupont3');
+        $visitor->setLastname('Dupont3');
+        $visitor->setEnabled(true);
+        $manager->persist($visitor);
+
+        $visitor = new User();
+        $visitor->setUsername('visitor4');
+        $visitor->setPlainPassword('visitor4');
+        $visitor->setEmail('mathieu4.chabas@outlook.com');
+        $visitor->setFirstname('Dupont4');
+        $visitor->setLastname('Dupont4');
+        $visitor->setEnabled(true);
+        $manager->persist($visitor);
+
+        $visitor = new User();
+        $visitor->setUsername('visitor5');
+        $visitor->setPlainPassword('visitor5');
+        $visitor->setEmail('mathieu5.chabas@outlook.com');
+        $visitor->setFirstname('Dupont5');
+        $visitor->setLastname('Dupont5');
+        $visitor->setEnabled(true);
+        $manager->persist($visitor);
+
         $manager->flush();
     }
 }

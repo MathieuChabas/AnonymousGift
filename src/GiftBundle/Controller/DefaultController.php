@@ -4,11 +4,11 @@ namespace GiftBundle\Controller;
 
 use GiftBundle\Entity\Event;
 use GiftBundle\Entity\UserEvent;
-use SoftDeleteable\Fixture\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use GiftBundle\Form;
+use GiftBundle\Form\Type;
 use Symfony\Component\HttpFoundation\Request;
+use GiftBundle\GiftsDistribution\Distribution;
 
 class DefaultController extends Controller
 {
@@ -40,11 +40,11 @@ class DefaultController extends Controller
     /**
      * @Route("/add-event")
      */
-    public function addEvent(Request $request){
+    public function addEventAction(Request $request){
 
         $event = new Event();
 
-        $form = $this->get('form.factory')->create(new Form\CreateEventType(), $event);
+        $form = $this->get('form.factory')->create(new Type\CreateEventType(), $event);
 
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -71,7 +71,9 @@ class DefaultController extends Controller
     /**
      * @Route("/event-{eventId}")
      */
-    public function singleEventAction($eventId){
+    public function singleEventAction(Request $request){
+        $eventId = $request->get('eventId');
+
         $repository = $this
             ->getDoctrine()
             ->getManager()
@@ -79,7 +81,7 @@ class DefaultController extends Controller
 
         $event = $repository->find($eventId);
 
-        $users = $this
+        $userEvents = $this
             ->getDoctrine()
             ->getRepository('GiftBundle:UserEvent')
             ->getUsersByEvent($event);
@@ -90,7 +92,7 @@ class DefaultController extends Controller
             $isOwner = true;
         }
         return $this->render('GiftBundle:Default:singleEvent.html.twig', array(
-            'users' => $users,
+            'userEvents' => $userEvents,
             'event' => $event,
             'isOwner' => $isOwner,
             'eventId' => $eventId
@@ -111,7 +113,7 @@ class DefaultController extends Controller
 
         $event = $repository->find($eventId);
 
-        $form = $this->get('form.factory')->create(new Form\AddParticipantType());
+        $form = $this->get('form.factory')->create(new Type\AddParticipantType());
 
         $user = $this->getUser();
 
@@ -141,7 +143,7 @@ class DefaultController extends Controller
     /**
      * @Route("/event/{shared_token}")
      */
-    public function registerNewParticipant(Request $request){
+    public function registerNewParticipantAction(Request $request){
 
         $repository = $this
             ->getDoctrine()
@@ -160,11 +162,44 @@ class DefaultController extends Controller
             'user' => $user,
             'event' => $event
         ));
-        if($UserEventFromDatabase == null){
+        if($UserEventFromDatabase === null){
             $em->persist($userEvent);
             $em->flush();
         }
 
         return $this->redirect($this->generateUrl('gift_default_singleevent', array('eventId' => $event[0]->getId())));
+    }
+
+    /**
+     * @Route("/event-{id}/distribution")
+     */
+    public function distributionAction(Request $request){
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $event = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('GiftBundle:Event')
+            ->find($request->get('id'));
+
+        $userEvents = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('GiftBundle:UserEvent')
+            ->findBy(array('event' => $event));
+
+        $participants = array();
+        foreach($userEvents as $item){
+            $participants[] = $item->getUser();
+        }
+
+        $distribution = new Distribution($participants);
+        $listDistribution = $distribution->distributeGifts();
+
+        foreach($userEvents as $item){
+            $item->setReceivedUser($em->getRepository('GiftBundle:User')->find($listDistribution[$item->getUser()->getId()]));
+        }
+        $em->flush();
+        return $this->redirect($this->generateUrl('gift_default_singleevent', array('eventId' => $request->get('id'))));
     }
 }

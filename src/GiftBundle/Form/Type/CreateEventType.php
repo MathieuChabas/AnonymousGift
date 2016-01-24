@@ -6,7 +6,7 @@
  * Time: 16:54
  */
 
-namespace GiftBundle\Form;
+namespace GiftBundle\Form\Type;
 use GiftBundle\Entity\UserEvent;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
